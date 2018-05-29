@@ -1,0 +1,325 @@
+% Make to Innovate Milestone Template
+% Modified from the UCT Project report by Linus C. Brendel
+% https://www.overleaf.com/latex/templates/uct-report-template/grctkzjtrqrm
+
+%------------------------------------------------------
+
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\graphicspath{{images/}}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{vmargin}
+\setmarginsrb{3 cm}{2.5 cm}{3 cm}{2.5 cm}{1 cm}{1.5 cm}{1 cm}{1.5 cm}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+
+%list separation
+%\setlist{nolistsep}
+%\setlist{noitemsep}
+
+%---------------------------------------------------------------------
+
+% If you are including code snips or putting code in your appendix, you can define
+% the colors used here.  See the listings example in the appendix for including 
+% source code such as MatLab or Arduino.
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+%---------------------------------------------------------------------
+
+% This is your title for your report.  It should include the milestone number and what this Milestone is about.
+\title{CySat-1 Concept of Operations}
+%This should be the team leader
+\author{Jacob Goldenberg}
+% Here enter all the names that contributed to this report.  This should be all the team members.
+\newcommand{\members}{}
+%This will automatically put today's date
+\date{September 1, 2017}
+
+%Here is the role for each person listed.  It is in the same order as the author and then members.
+\newcommand{\role}{Team Member}
+%Insert your faculty adviser here
+\newcommand{\faculty}{Matthew E. Nelson and Tomas Gonzalez-Torres }
+%Insert your project name here
+\newcommand{\project}{CySat}
+%Iinsert your team name here
+\newcommand{\team}{Mission Analysis}
+
+%------------------------------------------------------------------------
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\theauthor}
+\lhead{\thetitle\\}
+\cfoot{\thepage}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \includegraphics[scale = 0.4]{M2I_Boeing_Logo.png}\\[0.5 cm]
+    \textsc{\LARGE Iowa State University}\\[1.0 cm] 
+    \textsc{\Large AerE 294X/AerE 494X}\\[0.5 cm]
+    \textsc{\large Make to Innovate}\\[0.5 cm]
+    \rule{\linewidth}{0.2 mm} \\[0.4 cm]
+    { \huge \bfseries \thetitle}\\
+    \rule{\linewidth}{0.2 mm} \\[1.5 cm]
+     \vspace{-8mm}
+    \includegraphics[scale = 0.4]{CySat_Logo.png}\\[0.5 cm]
+    \emph{Project:}
+    \project \ \\
+    \emph{Team:}
+    \team
+    
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft} \large
+            \emph{Author(s):}\\
+            \theauthor \ \\
+            \members
+            \end{flushleft}
+            \end{minipage}~
+            \begin{minipage}{0.4\textwidth}
+            \begin{flushright} \large
+            \emph{Role:} \\
+            \role
+        \end{flushright}
+    \end{minipage}\\[1 cm]
+    {\large Faculty Advisers: \faculty}\\[1 cm]
+    {\large \thedate}\\[1 cm]
+ 
+    \vfill
+    
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Mission Concept}
+
+CySat at Iowa State University is designing, building, and flying a 3U CubeSat in Low Earth Orbit (LEO). It is to be a technology demonstrator that will be used for asteroid-surveying purposes.
+
+\section{Mission Phases}
+
+There are four main phases that CySat-I will transition through during its life. Each phase has its own purpose and is described below.
+
+\subsection{Phase One}
+
+Phase One is called Passive Beacon Mode. This mode involves a beacon that when received, relays an ASCII message containing minimal system status information and a welcome message for radio amateurs.. The purpose of this mode is primarily to give confirmation that CySat-I is partially functional.
+
+\subsection{Phase Two}
+
+Phase Two is known as Diagnostic Mode. This mode involves the gathering and down-linking of data samples from the EPS board that characterize CySat-I's orbit and health status.
+
+\subsection{Phase Three}
+
+Phase Three is known as Main Operating Mode. This mode involves the changing of operating parameters for the payload to perform any desired scientific experiments. All data is logged to the core-memory heap and down-linked during passes over Iowa State University's ground station.
+
+\subsection{Phase Four}
+
+Phase Four is known as End of Life Mode. Here, the watchdog test routines will be performed to test the implemented redundancies. The attitude of CySat-I can also be adjusted during this phase to increase the drag, allowing the CubeSat to re-enter Earth's atmosphere faster.
+
+\section{Subsystem Description}
+
+Each subsystem is contained in this section with a purpose statement along with how the subsystem functions. This should quickly acquaint the user as to what hardware and software is aboard CySat-I, why the subsystem is critical to the operation of the CubeSat, and what protocols are being utilized. Ideally, this document will provide any experienced user with the information necessary to communicate and control CySat-I, as well as troubleshoot any potential problems that may arise over its lifetime.
+
+\subsection{Structures}
+
+This subsystem is focused on the physical design of the CySat-I skeleton. Size, shape, and mass all affect the final shell of the CubeSat. Since CubeSats follow a template, the shape is limited to a rectangular prism, the dimensions are constrained to that of the 3U specifications, and the mass has an upper limit.
+
+\subsubsection{Dimensions}
+
+The dimensions of CySat-I is limited to that of three, 1U CubeSats. Since each 1U is 10 \si{\centi\meter\squared}, that means that CySat-I's dimensions will be \num{10 x 10 x 34.5} \si{\centi\meter}. While there is some slight buffer room for stowed, deployable components, these dimension specifications are relatively strict to adhere to the NanoRacks CubeSat Deployer (NRCSD) that it will launch from.
+
+\subsubsection{Mass}
+
+CubeSats also have mass limitations. There are multiple reasons for this, with the main being that CubeSats are getting a free ride to their destination, so there is a limit to how much extra mass a rocket can take to its destination. 3U CubeSats are limited to a maximum mass of 4.8 \si{\kilo\gram}, however CySat-I's mass will be less than this. The current mass of CySat-I is 2.9 \si{\kilo\gram}.
+
+\subsubsection{Material Composition}
+
+The shell of CySat-I is made of 6061-T6 Aluminum. The other structural components, such as rods, spacers, and screws, will be composed of 18-8 Stainless Steel.
+
+\paragraph{Micrometeoroids} \
+
+Research suggests that the ISS receives a lot of micrometeoroid impacts, but many of them are under 1 \si{\centi\meter} which poses no danger to the ISS. Micrometeorites larger than 1 \si{\centi\meter} are in the danger zone as they can cause catastrophic failure and are not tracked by stations on Earth. Since the structure's thickness is set by the design template, there is not much that can be done to prevent impacts. If there is a large impact, a total mission failure will likely occur.
+
+\subsubsection{Thermal Considerations}
+
+The temperature gradient that the ISS experiences (due to its altitude and attitude) is extremely important to consider when selecting material composition, instrumentation placement, and a heat control system. To begin, the temperature swing that the ISS experiences can be as low as -157 $^{\circ}$C to as high as 121 $^{\circ}$C. The material chosen has been proven to handle a temperature gradient as large as this, however, it is important that there is a method to dissipate as well as to retain the heat from both the environment and internal components. Currently, there are plans for passive thermal control, meaning heat sinks to the structure or metal blocks if enough space. The EPS itself does have a form of active thermal control.
+
+\subsubsection{Launch Environment}
+
+The two loads that structures is focused on will be the static loading and random vibrations due to the launch forces of the rocket, as well as the shock force due to stage separation and deployment.
+
+\subsection{Power}
+
+The purpose of the power subsystem is to appropriately provide and distribute power to all the subsystems. The power system is comprised of two primary components: the solar array and the electronic power system (EPS). Depending on if the batteries will be separated or mated, batteries would be considered a third component. During day passes the solar array will power the satellite and recharge the batteries so that during eclipse periods the satellite can run off of battery power.
+
+\subsubsection{Solar Array}
+
+At the moment, it is unknown if CySat-I will use a built in-house solar array, or commercial off the shelf (COTS) to obtain power. The original plan was to create an in-house solar array using two solar cells, the Spectrolab XTJ Prime solar cell and the Trisolax T01 solar wing, in an effort to maximize solar absorption. Both cells are SolarCell-Interconnect-Coverglass (CIC). The COTS option is to purchase panels directly from Clyde Space.
+
+\subsubsection{Electronic Power System}
+
+CySat-I will employ a COTS Clyde Space EPS. At this time, the number of Lithium-ion Polymer (LiPo) batteries being used is unknown, but everything is currently being planned around one 20 \si{\W\hour} battery. It is unknown if the batteries will be separate or mated to the EPS. The constraints that will determine this number will be determined from solar exposure experience (which can be approximated to that of the International Space Station) and the power usage per system. Currently, a full power budget is unknown.
+
+\subsection{Communications and Data Handling}
+
+The purpose of the communications system is to provide telemetry, command, and control to and from Earth. 
+
+The purpose of command is quite literally to command the system as a whole to perform operations. This is the most important part of CySat-1, because a failure in the command software could lead to a mission critical failure. Since no communication can be performed for 45 minutes following deployment, the CubeSat must be able to act autonomously in order to perform system checks and to enable communication to take place. The communication engagement will allow the ground station at Ames to attempt contact with CySat-1 for control as well as allow radio amateurs receive a welcome message beacon.
+
+The hardware that comprises the command subsystem consists of two auxiliary boards: a custom in-house flight computer and two variations of control circuitry.
+
+\subsubsection{Radio}
+
+CySat-I will use a CPUT-VUTRX or an AstroDev He-100 radio to perform communication tasks. It is currently unknown as to which radio will be used. The AstroDev is cheaper because it has already been purchased, but it is not as powerful and it is unknown if the manufacturer will be able to fix it as it is currently broken. The radio will use an up-link frequency in the very high frequency (VHF) 2 \si{\meter} band (\numrange{144}{146} \si{\mega\hertz}) and a down-link frequency in the ultra high frequency (UHF) 70 \si{\meter} band (\numrange{435}{438} \si{\mega\hertz}). By selecting frequency bands in the low end of the HF range, well into the mm range, it is possible to minimize the technical requirements of the satellite and maximize the ease-of-use by ground personnel and amateur radio operators. These two bands allow the lowest level FCC-issues amateur radio license holders (i.e. technician level) to operate with CySat-I. The radio provides 1200 baud audio frequency-shift keying (AFSK) and 9600 Gaussian Minimum Shift Keying (GMSK) and AX.25 framing for ease of use. The system will be responsive to published commands from amateurs to query satellite state. Using cryptographic peripheral of MCV, mission critical control messages will be authenticated via a Hash-Based Message Authentication Code.
+
+\subsubsection{Ground Station}
+
+The software for the ground tracking of CySat-I will be a lights out, hands off, distributed autonomous ground control system. The existing hardware facilitates flexible, reliable data communication on a range of frequencies appropriate for satellite operation. Open MCT, a mission control framework software developed by NASA, is being used for the graphical user interface (GUI).
+
+\subsubsection{Flight Computer}
+
+The flight computer contains two identical STM32F4 32 bit ARM micro-controller units (MCU) for redundancy; one as the primary unit and the other as the secondary ``watchdog" unit in the case of a failure of the primary. The main memory consists of four 1 Mbit external ferromagnetic memory integrated circuit (IC). The lower-half of each IC will be dedicated to radiation resistant firmware back-ups, cryptographic keys, and various other sensitive data items. The upper-half of each IC will be combined to form a large heap for data storage prior to down-link. This will form 512 KB of main memory.
+
+The primary multipoint control unit (MCU) software has been developed around FreeRTOS and the basic peripheral library for the STM 32.
+
+A multi-threaded approach was taken for the device drivers. The following tasks run in dedicated threads:
+
+\begin{itemize}
+\item Universal asynchronous receiver-transmitter (UART) communication with radio
+\item Command parsing and protocol layer
+\item Command handling, configuration, and response generation
+\item Main memory access
+\item Stabilization control (It is unknown whether the flight computer will be responsible for this at this time)
+\item Beacon
+\end{itemize}
+
+SPI and I2C are not handled by dedicated threads. Each of these buses uses a mutex-protected direct memory access (DMA) driver to allow a single thread to seize the bus and perform high-throughput data transfer while another thread is allowed to run. The flexibility of the STM 32 standard peripheral library allows for advanced low-level access to the MCU including a UART boot-loader that can be used to perform an emergency re-flash of the MCU in the case of radiation corruption. Identical firmware will be on both MCUs. The difference in functionality will be set by hardware general-purpose input/output (GPIO) configurations and detected at startup. Each MCU will force the invalid one to reset and reprogram it with a firmware image from main memory. The primary-watchdog configuration will provide resistance to radiation corruption.
+
+\subsubsection{Antenna Deployment}
+
+The antenna that will be used for communication between CySat-I and the Ames Ground Station will be composed of a tape measure. It will be strapped down to the sides of CySat-I, held in that position by ultra-high-molecular-weight polyethylene (Spectra) fishing wire that will be tied around a 1 \si{\centi\meter} thick filament of nichrome. A burner circuit will apply a 0.5 \si{\ampere} current which will burn the Spectra fishing wire, deploying the antennas by utilizing the spring force of the displaced tap measure.
+
+\subsection{Payload}
+
+The purpose of the payload is to give CySat-I the sensors it needs to perform its scientific mission.
+
+\subsubsection{Radiometer}
+
+The radiometer will passively measure radiant flux from the soil below in order to map soil moisture. This system will be comprised of a phased-array antenna, multiple low-noise amplifiers and band-pass filters, and a software-defined radio. Because a software-defined radio is coupled to the radiometer, the system will have high levels of flexibility and adaptability while operating in LEO.
+
+\subsubsection{Computational Resources}
+
+A Xilinx Zynq chipset combines the programmable logic of a traditional field-programmable gate array for pipelining radio frequency processing, with a duel core advanced reduced instruction set computing machine (A(RISC)M) Cortex fixed logic. This unifies the computational resources of the computational matrix representation (CMR) and decreases system complexity over a more distributed design. This does create a singular point of failure for the radar system, however, architectures with separated programmable logic (PL) and fixed logic (FL) suffer from the same poor survivability in the event of a failure of one of the subsystems.
+
+\subsubsection{AD/DAC RF Front End}
+
+At the moment, the specifics of the radio frequency (RF) front end are not known, where the specifics include the number of low-noise amplifiers (LNA's) and band pass filters (BPF's), supporting devices, and performance estimates. What is known, however, is the fact that LNA's and BPF's will be present on the RF frond end. The LNA's will be arranged according to the amount of noise generated by the device\textemdash{}the LNA with the least amount of noise generation will be first, followed by LNAs with larger noise generation in increasing order. This arrangement will incur the least amount of noise generated by the system as a whole.
+
+\subsubsection{Antenna Array}
+
+The antenna array for the radiometer will be comprised of a phased array of printed circuit board (PCB) antenna, created in-house. Phased arrays create the performance of a much larger antenna, and will be necessary to create the necessary gain for optimal radiometer operation. Primary operational goals include detecting and mapping the distribution of radiant flux over time. The exact location and performance of these antenna will be decided through PCB mapping on the exterior of the satellite and testing of the fabricated antenna. The radiometer will receive signal on the internationally-protected frequency of \numrange{1.4}{1.41} \si{\giga\hertz}, so the antenna array will be capable of reading these signals.
+
+\subsection{Attitude Determination and Control}
+
+The attitude, determination, and control system (ADCS) is responsible for orienting CySat-I is in space. The system is composed of three components: sensors, controls, and actuators. The sensors are responsible for gathering the relevant telemetry so that the current orientation of the satellite can be determined. The control algorithms process this information and send commands to the actuators. The actuators then turn the spacecraft to the desired orientation. CySat-I is an Earth-observing nadir-pointing satellite. This is the main goal of the ADCS, however it will also have to successfully stabilize the spacecraft from its initial tumbling motion after deployment. This section will focus on the four main parts of the attitude determination and control subsystem: detumbing, station keeping, momentum desaturation, and contingencies.
+
+\subsubsection{Detumbling}
+
+When ejected from the dispenser, the spacecraft can be expected to have a tumbling rate of up to 300 \si[per-mode=symbol]{\degree\per\second}. 
+
+\paragraph{Coarse Detumbling} \
+
+The tumbling rate post deployment will exceeds the maximum slew rate that any sensors can determine the position during. As such, a passive detumbling capability is required. Passive detumbling will be achieved with magnetic torque rods which will be turned on automatically as part of the early start up of the spacecraft. The magnetorquers will be on full power for the duration of detumbling. The net torque produced via interaction with earth’s magnetic field is weak and the coarse detumbling process is expected to take on the order of days to achieve a slew rate that the sensors can determine attitude under. An inertial sensing unit will measure the angular rate.
+
+\paragraph{Fine Detumbling} \
+
+Once the spinning rate has been reduced under a certain threshold, position sensors can determine orientation. Sun sensors determine the sun vector which is combined with time data to determine one axis of position. Dual horizon sensors detect the limb of Earth off two faces of the satellite, determining the nadir plane. With position data available, the actuators can be commanded to stabilize the craft. Reaction wheels are the primary actuator for this process. Detumbling is complete when CySat-I has achieved a steady nadir pointing state where a location can be locked in to \num{+-1} degree of accuracy.
+
+\subsubsection{Station Keeping}
+
+Station keeping will be managed with a minimum of 3 reaction wheels. To remain pointed at Earth below, the spacecraft will have to rotate one full revolution per orbit. At an orbital period of approximately 90 \si{\minute}, this amounts to 4 \si[per-mode=symbol]{\degree\per\second}. If the spacecraft's z-axis is aligned with the velocity vector, this rotation takes place purely in the Y-Z plane and would be controlled with one reaction wheel. Otherwise, it will involve an angular position change of all three axes. This will be computed and executed autonomously by the ADCS.
+
+\paragraph{Eclipse} \
+
+During eclipse, sun sensor data will not be available for attitude determination. The spacecraft will hold its position in the X-Z plane with inputs from the inertial sensing unit. When the spacecraft emerges from eclipse, sun sensor data will be available once again and the orientation in the X-Z plane will be corrected.
+
+\paragraph{Disturbances} \
+
+There are four major disturbances that will affect the station keeping of CySat-I. These disturbances are a source of constant torque that can add to momentum saturation of the reaction wheels. Worst case magnitudes of these torques are a gravity gradient of 0.44 \si{\newton\milli\meter}, a magnetic dipole of \num{6.0 e-4} \si{\newton\milli\meter}, solar radiation pressure of \num{1.91 e-5} \si{\newton\milli\meter}, and aerodynamic drag of \num{1.56 e-4} \si{\newton\milli\meter}.
+
+\subsubsection{Momentum Desaturation}
+
+The reaction wheels have a maximum spin rate and therefore can only reject torque for a certain amount of time before becoming saturated at the max spin rate. At this point the reaction wheel must be spun down, however, doing so imparts the angular momentum that is stored in the wheel back into the spacecraft’s motion. As such, a secondary actuator is needed to reject this momentum in the desaturation procedure. Further calculation is needed to determine how often desaturation will be needed.
+
+\paragraph{Desaturation} \
+
+Magnetorquers are used to desaturate the reaction wheels. A magnetic moment is created by activating the magnetorquer. The direction of this torque depends on the direction of the Earth’s magnetic field at the time, which can be determined with a magnetometer. The magnetorquers are activated in such a way that the net magnetic torque acts opposite the torque created by spinning down the reaction wheel. The maximum magnitude of the magnetic torque dictates the rate at which the reaction wheel can be spun down. Once the wheel has been spun down to zero speed, the magnetorquer is turned off. 
+
+\paragraph{Realignment} \
+
+The spacecraft may experience some drift during the desaturation procedure due to differences in the alignment of the torques which are due to small changes in the direction of Earth. It is unknown whether the system can be configured to actively compensate for these differences. The reaction wheels can be used to realign the spacecraft to its nadir position once the momentum has been bled out.
+
+\subsubsection{Contingencies}
+
+It is important to have contingencies within the ACDS as a failure in one or more of the control devices could lead to a total mission failure.
+
+\paragraph{Reaction Wheel Failure} 
+ 
+\subparagraph{Three Wheel Setup} \
+
+If the primary station keeping reaction wheel fails, the spacecraft has a chance to rotate 90 degrees in the X-Z plane to make the Z-axis reaction wheel the station keeping actuator. The spacecraft Z-axis must be perfectly aligned with the velocity at the time of failure for this to be effective. This amounts to a lower probability of success during eclipse. Disturbance torques will eventually cause the spacecraft to drift out off station in a manner that cannot be corrected.
+
+\subparagraph{Four Wheel Setup} \
+
+Four wheels can be placed so that if one fails, the other three can still produce a net torque in any direction. If one wheel fails, the mission is not compromised in any way. This setup is more massive and consumes more power, as some components of the torques produced by each wheel typically cancel each other out.
+
+\paragraph{Magnetorquer Failure} \
+
+With three magnetorquers, the resultant magnetic dipole is simply the vector sum of all three. If one fails, this results in a longer desaturation time. This also reduces the capability to actively produce a magnetic torque that is opposite the desaturation direction. In this case, passive desaturation may have to occur. Similar to detumbling, the momentum can be dumped out of the wheels and the remaining magnetorquers turned on until the spacecraft rights itself. The passive desaturation procedure will require that the momentum is dumped in a way that does not exceed any angular rate limit of our detumbling capabilities.
+
+\paragraph{Sensor Failure} 
+
+\subparagraph{Sun Sensor Failure} \
+
+If the sun sensor fails, CySat-I will find itself in eclipse state at all times. The inertial measurement unit (IMU) gyro can still be used to hold its current attitude, however this will not be able to be corrected if drift occurs. 
+
+\subparagraph{Horizon Sensor Failure} \
+
+If one of the horizon sensors fail, CySat-I will lose determination of its angular position in the X-Z plane unless data can be extrapolated from the sun sensor. If both sensors fail, CySat-1 loses nadir-pointing capability.
+
+\subparagraph{Magnetometer Failure} \
+
+A magnetometer will allow the spacecraft to actively use its magnetorquers to produce a magnetic moment in a desired direction. Since this requires knowledge of the Earth’s magnetic field vector, this cannot be done without a magnetometer. Passive correction is still viable in this case.
+
+%-------------------------------------------------------------------------
+\newpage
+%-------------------------------------------------------------------------
+
+\end{document}
